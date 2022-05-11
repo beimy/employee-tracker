@@ -1,3 +1,4 @@
+const { append } = require('express/lib/response');
 const res = require('express/lib/response');
 const mysql = require('mysql2');
 require('dotenv').config();
@@ -78,6 +79,27 @@ function addEmployee( newFirst_name, newLast_name, newRole, newManagerId ) {
         return result;
     });
 };
+
+function updateRole(newRoleID, employeeID) {
+        
+    // add input checker here!
+
+    const sql = `UPDATE employee SET role_id = ?
+                    WHERE id = ?`;
+    const params = [newRoleID, employeeID];
+
+    db.query(sql, params, (err, result) => {
+        if (err) {
+            console.log(err)
+            // check if employee is found
+        } else if (!result.affectedRows) {
+            console.log('No employee found with that id')
+        } else {
+          console.log(result);
+        }
+    });
+};
+
 
 
 
